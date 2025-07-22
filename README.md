@@ -1,0 +1,2 @@
+# TextTyper
+Types text "manually."
