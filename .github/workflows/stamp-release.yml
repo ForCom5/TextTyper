@@ -1,0 +1,39 @@
+name: Stamp release notes
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stamp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Edit v2.0.0 notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release edit v2.0.0 --repo ForCom5/TextTyper --target ec1c92446aa932c6ff43680f6f44ea9c04b05897 --notes "$(cat <<'EOF'
+          Rewrite of the SendKeys app.
+
+          - SendInput / KEYEVENTF_UNICODE, so +, ^, %, ~, and braces type as themselves
+          - Newlines become Enter (uncheck to send a literal line feed); tabs become Tab
+          - Countdown, per-character delay, and jitter
+          - Escape cancels after focus leaves the window
+
+          TextTyper.exe is a self-contained win-x64 build. No .NET install required.
+          A non-elevated process still cannot type into an elevated window.
+
+          ## AI attribution
+
+          Source for this 2.0 rewrite was written by Grok 4.7 (xAI) on 2026-10-09, in a session with ForCom5.
+
+          - Model: Grok 4.7
+          - Builder: xAI
+          - Date: 2026-10-09
+          - Session account: ForCom5
+          - Original 2025-07-21 single-file version: ChatGPT (file header said ChatGPTo4-mini-high) with ForCom5
+          - v2.0.0 binary: compiled by GitHub Actions on windows-latest from that source (.NET 8 SDK, self-contained win-x64). The model did not compile the exe.
+          EOF
+          )"
