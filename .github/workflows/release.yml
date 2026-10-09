@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag
+        required: true
+        default: v2.0.0
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Publish self-contained exe
+        run: >
+          dotnet publish -c Release -r win-x64 --self-contained true
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:DebugType=none
+          -o publish
+
+      - name: Create release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ inputs.tag }}"
+          else
+            TAG="${GITHUB_REF_NAME}"
+          fi
+          gh release create "$TAG" publish/TextTyper.exe \
+            --repo "${{ github.repository }}" \
+            --target "${{ github.sha }}" \
+            --title "TextTyper ${TAG#v}" \
+            --notes "$(cat <<'EOF'
+          Rewrite of the SendKeys app.
+
+          - SendInput / KEYEVENTF_UNICODE, so +, ^, %, ~, and braces type as themselves
+          - Newlines become Enter (uncheck to send a literal line feed); tabs become Tab
+          - Countdown, per-character delay, and jitter
+          - Escape cancels after focus leaves the window
+
+          TextTyper.exe is a self-contained win-x64 build. No .NET install required.
+          A non-elevated process still cannot type into an elevated window.
+          EOF
+          )"
