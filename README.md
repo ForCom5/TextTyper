@@ -21,6 +21,19 @@ dotnet run
 
 The Release binary is `bin/Release/net8.0-windows/TextTyper.exe`.
 
+Published builds are on the [releases](https://github.com/ForCom5/TextTyper/releases) page. `TextTyper.exe` there is a self-contained win-x64 binary and does not need a .NET install.
+
+## AI attribution
+
+Source for this 2.0 rewrite was written by Grok 4.7 (xAI) on 2026-10-09, in a session with ForCom5.
+
+- Model: Grok 4.7
+- Builder: xAI
+- Date: 2026-10-09
+- Session account: ForCom5
+- Original 2025-07-21 single-file version: ChatGPT (file header said ChatGPTo4-mini-high) with ForCom5
+- v2.0.0 binary: compiled by GitHub Actions on windows-latest from that source (.NET 8 SDK, self-contained win-x64). The model did not compile the exe.
+
 ## License
 
 Public domain. See [LICENSE](LICENSE).
