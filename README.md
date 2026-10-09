@@ -1,7 +1,26 @@
 # TextTyper
 
-This program exists as a silly project and something to "manually" type a text input to defeat things that don't like copy-paste.
+Types a block of text into whichever window has focus, one character at a time. Useful for fields that reject paste.
 
-<img width="415" height="377" alt="TextTyper" src="https://github.com/user-attachments/assets/cecb1778-84b9-457c-b7b9-b6d31b626723" />
+Hit Start, click the target field during the countdown, and leave this window alone until it finishes. Escape cancels even after focus has moved. Fails closed: Stop, closing the window, and Escape all abort the run.
 
-AI content disclaimer: This project contains source code and documentation generated largely in part by artificial intelligence (AI) tools.
+## What changed from the first version
+
+The original was a single `TextTyper.cs` that called `SendKeys.SendWait` from a background thread. `SendKeys` treats `+ ^ % ~ { }` as modifiers, so passwords, emails, and code came out wrong, and a cross-thread read of the text box was undefined. This version is a normal .NET 8 WinForms project and sends keystrokes with `SendInput` / `KEYEVENTF_UNICODE`.
+
+Newlines become Enter by default (uncheck that if a field should receive a literal line feed). Tabs are Tab. Delay and jitter are per character so the cadence is not a fixed 10 ms metronome.
+
+## Build
+
+Windows, .NET 8 SDK:
+
+```
+dotnet build -c Release
+dotnet run
+```
+
+The Release binary is `bin/Release/net8.0-windows/TextTyper.exe`.
+
+## License
+
+Public domain. See [LICENSE](LICENSE).
