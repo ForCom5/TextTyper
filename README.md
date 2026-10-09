@@ -23,6 +23,10 @@ The Release binary is `bin/Release/net8.0-windows/TextTyper.exe`.
 
 Published builds are on the [releases](https://github.com/ForCom5/TextTyper/releases) page. `TextTyper.exe` there is a self-contained win-x64 binary and does not need a .NET install.
 
+## Security
+
+Supported versions and how to report a vulnerability are in [SECURITY.md](SECURITY.md). Do not file a public issue for that.
+
 ## AI attribution
 
 Source for this 2.0 rewrite was written by Grok 4.7 (xAI) on 2026-10-09, in a session with ForCom5.
