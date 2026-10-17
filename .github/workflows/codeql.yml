@@ -8,6 +8,9 @@ on:
   schedule:
     - cron: "17 6 * * 1"
 
+permissions:
+  contents: read
+
 jobs:
   analyze:
     name: Analyze
@@ -17,14 +20,14 @@ jobs:
       contents: read
       security-events: write
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
-      - uses: github/codeql-action/init@v3
+      - uses: github/codeql-action/init@ce5e7eeac396d720fe2d802714996c8ce561e311 # v3
         with:
           languages: csharp
 
-      - uses: github/codeql-action/autobuild@v3
+      - uses: github/codeql-action/autobuild@ce5e7eeac396d720fe2d802714996c8ce561e311 # v3
 
-      - uses: github/codeql-action/analyze@v3
+      - uses: github/codeql-action/analyze@ce5e7eeac396d720fe2d802714996c8ce561e311 # v3
         with:
           category: "/language:csharp"
