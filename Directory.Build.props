@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <!-- Windows desktop targeting packs are not installed with the Linux SDK.
+         This lets dotnet build succeed on Linux. Release exes are still produced on Windows. -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+  </PropertyGroup>
+</Project>
